@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Untitled Scifi Western Pre-Adventure</title>
+    <style>
+        /* Center the canvas */
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        canvas {
+            border: 1px solid #000;
+        }
+
+        /* Modal styling, positioned at the top center of the canvas */
+        #modal, #opening-modal, #end-modal {
+            display: none;
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            width: 400px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        #modal p, #opening-modal p, #end-modal p {
+            margin: 0 0 20px;
+            font-size: 18px;
+        }
+        .btn {
+            background-color: #008cba;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-left: 20px;
+        }
+        .btn:hover {
+            background-color: #005f5f;
+        }
+
+        /* Motivation bar styling */
+        #motivation-bar {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 200px;
+            height: 30px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            padding-left: 10px;
+            font-size: 14px;
+            color: #333;
+            font-weight: bold;
+        }
+        #motivation-fill {
+            height: 100%;
+            background-color: #76c7c0;
+            border-radius: 5px;
+        }
+        #motivation-label {
+            position: absolute;
+            left: 10px;
+            font-size: 14px;
+            color: #333;
+            font-weight: bold;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+</head>
+<body>
+    <div id="motivation-bar">
+        <span id="motivation-label">Motivation: 5/10</span>
+        <div id="motivation-fill"></div>
+    </div>
+
+    <div id="opening-modal">
+        <p id="opening-message">Welcome to the Untitled Scifi Western Pre-Adventure! Your goal is to interact with various elements in this concept art, hopefully inspiring you to overcome design obstacles in the creation of your untitled scifi Western campaign setting. Be careful not to lose all motivation!</p>
+        <button id="start-btn" class="btn">Start</button>
+    </div>
+
+    <div id="modal">
+        <p id="modal-message">Message</p>
+        <button id="first-btn" class="btn">Option 1</button>
+        <button id="second-btn" class="btn">Option 2</button>
+    </div>
+
+    <div id="end-modal">
+        <p id="end-message">End Message</p>
+        <button id="restart-btn" class="btn">Restart</button>
+    </div>
+
+    <script>
+        let bg;
+        let motivation = 5;
+        let areas = [
+            {x: 198, y: 543, w: 240, h: 320, message: "A human sitting nearby, the only one in fact, appears distracted, lost in thought. Maybe he's pondering the tensions of racial anxieties provoked in both scifi and Western settings, especially given ChatGPT seems to have preferred robots generated in the foreground. You know you've spent countless hours navigating how to address this topic appropriately. How do you feel?", increaseText: "You've got this!", decreaseText: "Doubt yourself yet again", visible: true},
+            {x: 575, y: 425, w: 263, h: 448, message: "A robot sheriff meets you at the entrance to the town, gun in hand. Guns, although necessary for the setting, have become a headache for balancing in the source ruleset you're using.", increaseText: "Continue balancing", decreaseText: "Guns are just this world's magic", visible: true},
+            {x: 949, y: 417, w: 141, h: 298, message: "A less anthropomorphic robot stands tall, possibly for security? You've felt melee combat deserves a place in this campaign. Maybe that's easier for machinations such as the one standing before you.", increaseText: "No! Plasma swords are cool", decreaseText: "Worry about Naruto running through bullets/lasers", visible: true},
+            {x: 1106, y: 544, w: 125, h: 171, message: "A seated anthropomorphic robot appears to ponder, much like the human nearby. Androids that resemble humans have often come to mind as a point to blur the boundary between them and robots in your world. Again, as with the human, how do you avoid clumsy racial metaphors?", increaseText: "The boundary must be blurred", decreaseText: "I'm having second thoughts...", visible: true},
+            {x: 1253, y: 515, w: 164, h: 342, message: "ChatGPT really wanted to give you a certain copyrighted character from a particularly litigious company here and fought you on removing it, so you've had to put a placeholder here. While tropes are sometimes useful, how do you avoid being derivative?", increaseText: "Through playtest feedback, of course", decreaseText: "Nothing is original", visible: true},
+            {x: 635, y: 270, w: 220, h: 96, message: "In the distance, an inviting vista beckons you forward...until you remember you've sketched out little beyond specific instances. Beyond those hills are actually, well, nothing.", increaseText: "One brick at a time", decreaseText: "This is overwhelming", visible: true},
+            {x: 700, y: 50, w: 65, h: 50, message: "You explicitly positioned the entirety of your setting on one planet. No space travel here; it tends to become too much the focus when present. But what about your players' wishes?", increaseText: "The depth on-planet and novelty will appeal", decreaseText: "They'll just homebrew space travel", visible: true},
+            {x: 445, y: 425, w: 125, h: 165, message: "A saloon seems particularly busy this time of evening. You're almost certain they will become a natural starting point for adventures, much like inns in fantasy settings.", increaseText: "Absolutely! A strength, not a weakness", decreaseText: "Unless players just start constant bar fights and shootouts", visible: true},
+            {x: 1000, y: 95, w: 100, h: 250, message: "Unsure what ChatGPT was going for with this sign, you're nonetheless intrigued. What wonders does a Dadster store hold?", increaseText: "Every table's session is their own", decreaseText: "Nothing but derailing player nonsense", visible: true},
+            {x: 500, y: 315, w: 130, h: 75, message: "Ah, the local blacksmith. While some tabletop RPG tropes are unavoidable and even useful, what new ones might you be able to introduce?", increaseText: "The sky's the limit!", decreaseText: "We can't get too experimental now", visible: true}
+        ];
+        let isModalOpen = false;
+
+        function preload() {
+            bg = loadImage('background.png');
+        }
+
+        function setup() {
+            createCanvas(1500, 900);
+
+            document.getElementById('opening-modal').style.display = 'flex';
+            isModalOpen = true;
+
+            document.getElementById('start-btn').onclick = function() {
+                document.getElementById('opening-modal').style.display = 'none';
+                isModalOpen = false;
+            };
+
+            document.getElementById('restart-btn').onclick = function() {
+                location.reload();
+            };
+        }
+
+        function draw() {
+            background(bg);
+            updateMotivationDisplay();
+
+            areas.forEach(area => {
+                if (area.visible) drawRectangle(area, [255, 255, 255, 50]);
+            });
+
+            areas.forEach(area => {
+                if (area.visible && isMouseOverRectangle(area)) drawRectangle(area, [255, 255, 255, 100]);
+            });
+        }
+
+        function drawRectangle(area, color) {
+            fill(...color);
+            noStroke();
+            rect(area.x, area.y, area.w, area.h);
+        }
+
+        function isMouseOverRectangle(area) {
+            return mouseX > area.x && mouseX < area.x + area.w &&
+                   mouseY > area.y && mouseY < area.y + area.h;
+        }
+
+        function mousePressed() {
+            if (isModalOpen) return;
+
+            areas.forEach(area => {
+                if (area.visible && isMouseOverRectangle(area)) {
+                    showMessage(area);
+                    area.visible = false;
+                }
+            });
+
+            checkEndConditions();
+        }
+
+        function showMessage(area) {
+            document.getElementById('modal-message').innerText = area.message;
+            let increaseFirst = Math.random() < 0.5;
+
+            document.getElementById('first-btn').innerText = increaseFirst ? area.increaseText : area.decreaseText;
+            document.getElementById('second-btn').innerText = increaseFirst ? area.decreaseText : area.increaseText;
+
+            document.getElementById('first-btn').onclick = function() {
+                updateMotivation(increaseFirst ? 1 : -1);
+                closeModal();
+            };
+
+            document.getElementById('second-btn').onclick = function() {
+                updateMotivation(increaseFirst ? -1 : 1);
+                closeModal();
+            };
+
+            document.getElementById('modal').style.display = 'flex';
+            isModalOpen = true;
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+            isModalOpen = false;
+        }
+
+        function updateMotivation(change) {
+            motivation = Math.min(10, Math.max(0, motivation + change));
+            updateMotivationDisplay();
+            checkEndConditions();
+        }
+
+        function updateMotivationDisplay() {
+            document.getElementById('motivation-fill').style.width = (motivation * 10) + "%";
+            document.getElementById('motivation-label').innerText = `Motivation: ${motivation}/10`;
+        }
+
+        function checkEndConditions() {
+            if (motivation >= 10) {
+                endGame("Congratulations! Maybe you can pull this off sometime next year!");
+            } else if (motivation <= 0) {
+                endGame("As your motivation drops to an all-time low, imposter syndrome takes over. You begin to wonder if you should reconsider future game design.");
+            } else if (areas.every(area => !area.visible)) {
+                endGame("Stalemate. Maybe you'll figure it out by 2030?");
+            }
+        }
+
+        function endGame(message) {
+            document.getElementById('end-message').innerText = message;
+            document.getElementById('end-modal').style.display = 'flex';
+            isModalOpen = true;
+        }
+    </script>
+</body>
+</html>
