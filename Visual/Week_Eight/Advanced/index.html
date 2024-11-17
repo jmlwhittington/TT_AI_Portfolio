@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Image Classifier with Confusion Matrices</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.dom/1.5.0/p5.dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ml5/0.12.2/ml5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-vis"></script>
+</head>
+<body>
+    <script>
+        let img;
+        let label = "waiting...";
+        let classifier;
+        let modelURL = 'https://teachablemachine.withgoogle.com/models/OKrVwAAMU/';
+        let resultsArray = [];
+        let trueLabels = [];
+        let predictedLabels = [];
+
+        function preload() {
+            classifier = ml5.imageClassifier(modelURL + 'model.json');
+        }
+
+        function setup() {
+            createCanvas(800, 800);
+            document.body.style.backgroundColor = '#ffffff';
+
+            let button = createFileInput(handleFile);
+            button.position(100, 100);
+            button.style('font-size', '18px');
+        }
+
+        function handleFile(file) {
+            if (file.type === 'image') {
+                img = createImg(file.data, '', '', () => {
+                    img.hide();
+                    classifyImage();
+                });
+            } else {
+                console.log("Not an image file!");
+            }
+        }
+
+        function classifyImage() {
+            classifier.classify(img, gotResults);
+        }
+
+        function draw() {
+            background(0);
+
+            if (img) {
+                image(img, (width - img.width) / 2, 0, img.width, img.height);
+            }
+
+            if (resultsArray.length > 0) {
+                textSize(24);
+                textAlign(CENTER, CENTER);
+                fill(255);
+
+                if (resultsArray[0].confidence >= 0.75) {
+                    textStyle(BOLD);
+                    text(`${resultsArray[0].label}: ${(resultsArray[0].confidence * 100).toFixed(2)}%`, width / 2, height - 120);
+                } else {
+                    textStyle(BOLD);
+                    text(`Confidence below 75% for top label: ${resultsArray[0].label}`, width / 2, height - 120);
+                }
+
+                textStyle(NORMAL);
+                text(`${resultsArray[1].label}: ${(resultsArray[1].confidence * 100).toFixed(2)}%`, width / 2, height - 80);
+                text(`${resultsArray[2].label}: ${(resultsArray[2].confidence * 100).toFixed(2)}%`, width / 2, height - 40);
+            } else {
+                textSize(32);
+                textAlign(CENTER, CENTER);
+                fill(255);
+                text(label, width / 2, height - 16);
+            }
+        }
+
+        function gotResults(error, results) {
+            if (error) {
+                console.error(error);
+                return;
+            }
+            resultsArray = results.slice(0, 3);
+            label = results[0].label;
+            createTrueLabelSelection(results);
+        }
+
+        function createTrueLabelSelection(results) {
+            let existingDiv = document.getElementById('labelSelection');
+            if (existingDiv) {
+                existingDiv.remove();
+            }
+
+            let labelDiv = createDiv('Select the true label:');
+            labelDiv.id('labelSelection');
+            labelDiv.position(100, 150);
+            labelDiv.style('font-size', '18px');
+
+            let radio = createRadio('trueLabel');
+            radio.parent(labelDiv);
+            radio.style('font-size', '18px');
+            results.forEach((result) => {
+                radio.option(result.label);
+                let lineBreak = createElement('br');
+                lineBreak.parent(labelDiv);
+            });
+
+            let submitButton = createButton('Submit');
+            submitButton.parent(labelDiv);
+            submitButton.style('font-size', '18px');
+            submitButton.mousePressed(() => {
+                let selectedLabel = radio.value();
+                if (selectedLabel) {
+                    let trueLabel = selectedLabel;
+                    trueLabels.push(trueLabel);
+
+                    let predictedLabel = resultsArray[0].confidence >= 0.75 ? resultsArray[0].label : "Low Confidence";
+                    predictedLabels.push(predictedLabel);
+                    
+                    updateConfusionMatrix();
+                    visualizeConfusionMatrix();
+                    visualizeSecondMostLikelyMatrix();
+
+                    labelDiv.remove();
+                }
+            });
+        }
+
+        function updateConfusionMatrix() {
+            const uniqueLabels = Array.from(new Set(trueLabels.concat(predictedLabels).concat(["Low Confidence"])));
+            let confusionMatrix = Array(uniqueLabels.length).fill().map(() => Array(uniqueLabels.length).fill(0));
+            for (let i = 0; i < trueLabels.length; i++) {
+                const trueIndex = uniqueLabels.indexOf(trueLabels[i]);
+                const predictedIndex = uniqueLabels.indexOf(predictedLabels[i]);
+                confusionMatrix[trueIndex][predictedIndex]++;
+            }
+            window.latestConfusionMatrix = { matrix: confusionMatrix, labels: uniqueLabels };
+        }
+
+        function visualizeConfusionMatrix() {
+            if (window.latestConfusionMatrix) {
+                const container = { name: 'Confusion Matrix (Top Prediction)', tab: 'Evaluation' };
+                const data = { values: window.latestConfusionMatrix.matrix, tickLabels: window.latestConfusionMatrix.labels };
+                tfvis.render.confusionMatrix(container, data);
+            } else {
+                console.log("No data available to visualize confusion matrix.");
+            }
+        }
+
+        function visualizeSecondMostLikelyMatrix() {
+            if (resultsArray.length > 1) {
+                const container = { name: 'Confusion Matrix (Second Most Likely Prediction)', tab: 'Evaluation' };
+                let secondPredictedLabels = predictedLabels.map(() => resultsArray[1].label);
+                const uniqueLabels = Array.from(new Set(trueLabels.concat(secondPredictedLabels)));
+                let secondMatrix = Array(uniqueLabels.length).fill().map(() => Array(uniqueLabels.length).fill(0));
+                for (let i = 0; i < trueLabels.length; i++) {
+                    const trueIndex = uniqueLabels.indexOf(trueLabels[i]);
+                    const predictedIndex = uniqueLabels.indexOf(secondPredictedLabels[i]);
+                    secondMatrix[trueIndex][predictedIndex]++;
+                }
+                const data = { values: secondMatrix, tickLabels: uniqueLabels };
+                tfvis.render.confusionMatrix(container, data);
+            }
+        }
+    </script>
+</body>
+</html>
