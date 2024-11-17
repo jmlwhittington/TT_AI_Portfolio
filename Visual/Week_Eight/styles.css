@@ -6,17 +6,14 @@ body {
   background-color: #f4f4f4;
   color: #333;
   text-align: center;
-  padding-top: 90px;
 }
 
 header {
   background: #333;
   color: #fff;
   padding: 1em 0;
-  position: fixed;
   top: 0;
   width: 100%;
-  z-index: 1000;
 }
 
 nav ul {
@@ -54,7 +51,6 @@ footer {
   padding: 1em 0;
   background: #333;
   color: #fff;
-  position: relative;
-  bottom: 0;
   width: 100%;
+  margin-top: auto;
 }
