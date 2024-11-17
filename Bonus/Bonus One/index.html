@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CatGPT Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        .chat-container {
+            width: 100%;
+            max-width: 600px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            height: 60vh; /* Adjusted height */
+            max-height: 600px; /* Adjusted maximum height */
+            background-image: url('https://github.com/jmlwhittington/CatGPT/raw/main/background.webp');
+            background-size: 425px;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        .title {
+            padding: 10px;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-bottom: 1px solid #ddd;
+        }
+        .chat-box {
+            flex: 1;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.8);
+            margin: 0;
+        }
+        .message {
+            margin-bottom: 10px;
+        }
+        .user-message {
+            text-align: right;
+            color: #007bff;
+        }
+        .bot-message {
+            text-align: left;
+            color: #333;
+        }
+        .input-container {
+            display: flex;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-top: 1px solid #ddd;
+        }
+        .input-container input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .input-container button {
+            padding: 10px 15px;
+            margin-left: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+        .input-container button:hover {
+            background-color: #0056b3;
+        }
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .button-container a {
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 4px;
+            text-align: center;
+        }
+        .button-container a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="title">CatGPT</div>
+        <div class="chat-box" id="chat-box">
+            <!-- Messages will appear here -->
+        </div>
+        <div class="input-container">
+            <input type="text" id="user-input" placeholder="Type your message...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <div class="button-container">
+        <a href="https://jmlwhittington.github.io/TT_AI_Portfolio/">Return home</a>
+        <a href="https://github.com/jmlwhittington/CatGPT" target="_blank">View source repository</a>
+    </div>
+
+    <script>
+        const catNoises = ['meow', 'mew', 'mrr', 'nyan', 'purr', 'hiss', 'rrr', 'prrr'];
+        const punctuations = ['.', '!', '?', '...'];
+        const sentencePatterns = [
+            'X.', 'X!',
+            'X X.', 'X X!',
+            'X X X.', 'X X X!',
+            'X X, X.', 'X X, X!',
+            'X X X, X.', 'X X X, X!',
+            'X X X X.', 'X X X X!',
+            'X X X X, X.', 'X X X X, X!'
+        ];
+
+        function getRandomElement(arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        }
+
+        function getCatResponse() {
+            const pattern = getRandomElement(sentencePatterns);
+            const parts = pattern.split(/(?<=\s)|(?=\s)|(?<=,)|(?=,)/); // Split by spaces and commas while keeping delimiters
+
+            let response = '';
+            let addComma = false;
+
+            for (let i = 0; i < parts.length; i++) {
+                if (parts[i].trim() === '') {
+                    response += ' '; // Maintain space if empty part
+                } else if (parts[i].trim() === ',') {
+                    addComma = true;
+                } else {
+                    if (addComma) {
+                        response = response.trimEnd(); // Remove trailing space before adding comma
+                        response += ', '; // Add comma followed by space
+                        addComma = false;
+                    } else if (i > 0) {
+                        response += ' '; // Add space between words
+                    }
+                    response += getRandomElement(catNoises);
+                }
+            }
+
+            // Ensure proper ending punctuation
+            const lastChar = response.charAt(response.length - 1);
+            let randomPunctuation = getRandomElement(punctuations);
+            if (['.', '!', '?'].includes(lastChar)) {
+                randomPunctuation = ''; // No additional punctuation needed
+            }
+            response = response.trim(); // Remove any trailing spaces
+            if (response.endsWith(',')) {
+                response = response.slice(0, -2); // Remove trailing comma and space if present
+            }
+            response += randomPunctuation;
+
+            // Capitalize the first letter
+            response = response.charAt(0).toUpperCase() + response.slice(1);
+
+            return response;
+        }
+
+        function displayMessage(text, sender) {
+            const chatBox = document.getElementById('chat-box');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}-message`;
+            messageDiv.textContent = text;
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight; // Scroll to the bottom
+        }
+
+        function sendMessage() {
+            const userInput = document.getElementById('user-input').value.trim();
+            if (userInput) {
+                displayMessage(userInput, 'user');
+                document.getElementById('user-input').value = ''; // Clear input field
+
+                const botResponse = getCatResponse();
+                setTimeout(() => displayMessage(botResponse, 'bot'), 500); // Simulate typing delay
+            }
+        }
+
+        // Allow pressing Enter to send message
+        document.getElementById('user-input').addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                sendMessage();
+                event.preventDefault(); // Prevent newline in input field
+            }
+        });
+    </script>
+</body>
+</html>
