@@ -13,6 +13,7 @@
             height: 100vh;
             margin: 0;
             background-color: #f0f0f0;
+            position: relative; /* Needed for positioning the boxes */
         }
         canvas {
             border: 1px solid #000;
@@ -79,6 +80,34 @@
             color: #333;
             font-weight: bold;
         }
+
+        /* Style for the small boxes */
+        .bottom-box {
+            position: fixed;
+            padding: 10px 15px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            font-size: 14px;
+            border-radius: 5px;
+            z-index: 1000;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Position the boxes */
+        #repo-link {
+            bottom: 20px;
+            right: 20px;
+        }
+
+        #home-link {
+            bottom: 20px;
+            left: 20px;
+        }
+
+        /* Add hover effect for the boxes */
+        .bottom-box:hover {
+            background-color: rgba(0, 0, 0, 0.9);
+        }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
 </head>
@@ -103,6 +132,12 @@
         <p id="end-message">End Message</p>
         <button id="restart-btn" class="btn">Restart</button>
     </div>
+
+    <!-- Repo Link (Bottom Right) -->
+    <a id="repo-link" class="bottom-box" href="https://github.com/jmlwhittington/TT_Game_Demo" target="_blank">View source repository</a>
+
+    <!-- Home Link (Bottom Left) -->
+    <a id="home-link" class="bottom-box" href="https://jmlwhittington.github.io/TT_AI_Portfolio/">Return home</a>
 
     <script>
         let bg;
