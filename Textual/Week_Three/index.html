@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Distant Reading of <i>Down and Out in the Magic Kingdom</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="https://jmlwhittington.github.io/TT_AI_Portfolio/">Home</a></li>
+		<li><a href="#description">Top</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section id="description">
+    <h1>Distant Reading of <i>Down and Out in the Magic Kingdom</h1>
+    <p>The following is my weekly discussion post.</p>
+  </section>
+  
+  <section id="main">
+    <p>For this week’s exercise, I switched over to ChatGPT rather than Copilot, as I ran into unknown issues with Copilot. As in, I couldn’t even get started. ChatGPT also put up a headache, but I managed to get it figured out. The book I chose was Cory Doctorow’s <i>Down and Out in the Magic Kingdom</i>, available on Project Gutenberg because Doctorow holds incredibly progressive values toward publishing and access. I chose it because I own it, read it at the start of this year, and remembered all the venues he’d made it available. Lastly, I ended up using Voyant Tools to cross-reference some of ChatGPT’s output after I started questioning some of the output. More on that in a moment.</p>
+    <p>I started off following the prompts in the exercise. Rather than focusing on conversation as in the prior two weeks, I was far more interested in what data was provided to me, so after sending along the initial “I’d like to do some distant reading analysis of a novel. Can you help me through the process?” and seeing a mountain of options, I moved onto the second prompt of just attaching the file and asking it to preprocess it. Here’s where the first issue occurred, unbeknownst to me until a few prompts later. It was requested that we leave the metadata in, which I did. Being a more modern text, and I even believe possibly manually added to Project Gutenberg by Doctorow himself, this version of <i>Down and Out</i> maintains the blurbs and even licensing information unique to Doctorow’s releases. ChatGPT poorly handled removing this, leading to some interesting results I discovered in the first visualization attempt.</p>
+    <p>Anyway, I got through the preprocessing, obtained the file to verify, generated a bag of words, removed the stopwords, and moved onto the word cloud generation:</p>
+    <img src="one.png" alt="The first graph">
+    <p>Nothing unusual yet, but I didn’t want to do a word cloud for my two visualizations. (I’ve included it anyway and will end up including more than two to display the procedure because of my issues with it.) I decided to veer off into my own prompts at this point, after further consulting the instructions. First, most common word pairs:</p>
+    <img src="two.png" alt="The second graph">
+    <p>There it is. I hadn’t told ChatGPT how many pairs to list, but even in the top ten, I saw the author’s name. That got me thinking further: what if “magic kingdom” was also inside the extradiegetic content still included? I asked ChatGPT to remove “cory doctorow,” “magic kingdom,” and now show me the top 25 most common word pairs:</p>
+    <img src="three.png" alt="The third graph">
+    <p>Better, but now I’m wondering, “‘magic kingdom’ might still be on this list.” So I go through the file and manually count the instances inside the story itself. It’s definitely the case. What if other info still appears as well? It’s at this point I decide to just remove everything prior to the start of the story and after the end of it, then feed it back through for a more accurate graph:</p>
+    <img src="four.png" alt="The fourth graph">
+    <p>That’s better. As you can see, one item was removed (“terms license”), while others were rearranged (like “disney world” and “youre going”). At this point, I’m still considered a second visualization that isn’t a word cloud, so I decide I want to see how frequently three of the characters’ names appear throughout the story. I chose Julius, Dan, and Lil because of an important entanglement between them that I thought might be of interest:</p>
+    <img src="five.png" alt="The fifth graph">
+    <p>Because of the metadata issue, I decided to verify this against a manually edited copy of the text in Voyant Tools. It checks out. Now, I realize Julius only appears whenever someone else says his name, as he’s the narrator, and “I” was removed as part of the stopwords. No matter. This can be used to see when someone is narrating at him, be it his own internal monologue or other characters. As a result of this, I start to think about the relationship between each of these character mentions, and ask ChatGPT to average each of these characters in pairs, plus the three total. Evidentally, my prompt wasn’t all that great, because ChatGPT gave me this back in response:</p>
+    <img src="six.png" alt="The sixth graph">
+    <p>Whatever <i>that</i> is. It surprisingly wasn’t difficult to get this fixed:</p>
+    <img src="seven.png" alt="The seventh graph">
+    <p>And here we are. Some of the averages are skewed because of the extreme difference between Julius and the others, but I’m satisfied with it. I can assume these are sections where each pair or the trio as a whole become more or less relevant. (I’d like to point out I have no experience doing this kind of work, so forgive me if I’m missing something or there’s actually nothing of value in this.)</p>
+	<p>Ted Underwood’s piece made me incredibly intrigued at the prospect of this social-scientific investigation of textual media. I’d prior assumed distant reading was just digital tools looking at literature, but he opened up possibilities I hadn’t considered in the vein of how he assesses Moretti’s impact. A few external sources and my own past contribute to this. First, I have a background in linguistics. I’d originally thought it was the discipline I wanted to commit to in graduate school, but it’s one I’ve abandoned past occasional hobbyist interest to date. But Underwood caused me to recall two other pieces: “Improving Video Game Conversations with Trope-Informed Design” by Stephanie Rennick and Seán Roberts, and Garry Crawford’s “Forget the Magic Circle (or Towards a Sociology of Video Games).” Underwood’s usage of “sociology of literature” for the latter, and his pointing out of literary history’s interest in linguistics for the former. It got me thinking, “What might I be able to glance from literary criticism/history’s path into today, in application to my own work on games and theme parks? If anything?”</p>
+	<p>That “if anything” is pretty important to highlight. As Underwood claims, distant reading isn’t just computational tools. In fact, they’ve not produced enough fruit to be considered central enough. I could’ve accomplished roughly the same feats in this exercise with Voyant Tools and Excel after all. While I don’t know much about this methodology, I do know the data I could extract from Voyant Tools is easily manipulated in Excel, where I have much more expertise and comfort. I might’ve even been able to obtain those graphs more quickly, due to the roadblocks I encountered with ChatGPT. I’d still, however, be acting in a manner consistent with a social-scientific approach, as Underwood pointed out; “It would be better to judge it simply by asking whether the blind spot it identified is turning out to contain anything interesting.” Maybe I need to look more deeply into another discipline entirely, aside from just newer tools (although the newer tools also couldn’t hurt).</p>
+	<p>Onto the Melanie Mitchell reading this week. I’m not an expert in AI. Not even close. But I did do my undergrad in speech-language pathology, where I was forced to learn quite a bit of physics, anatomy/physiology, and neuroscience. I also worked in the tech industry for a while and have homelabbed and programmed at an amateur level for two decades at this point. Not only does Mitchell make these concepts accessible, I was able to pull on this past experience to build upon the analogies further. If there’s anything I’ve taken from the book so far, it’s that we have quite a ways to go before AI is fulfilling its best promises and worst threats. That doesn’t mean there still aren’t some utilities to be found. I think that builds upon what I observed above with Underwood: maybe there’s something to be found here, just don’t get your hopes up too high and open your mind to experimentation. I enjoy conceptualizing these bridges between my present humanities mind, past (social-)science mind, and ever-ongoing tech mind, especially in relation to how my scholarly work might benefit.</p>
+  </section>
+
+  <section id="citations">
+    <h1>Works Cited</h1>
+    <p>Crawford, Garry. “Forget the Magic Circle (or Towards a Sociology of Video Games).” Under the Mask 2, 5 June 2009, University of Bedfordshire, Bedfordshire, United Kingdom. Keynote Address. <a href="http://underthemask.wikidot.com/key-note" target="_blank">underthemask.wikidot.com/key-note</a>.</p>
+    <p>Doctorow, Cory. <i>Down and Out in the Magic Kingdom</i>. Tor Books, 2003. <i>Project Gutenberg</i>, <a href="https://gutenberg.org/ebooks/8086" target="_blank">gutenberg.org/ebooks/8086</a>, accessed 7 Sept. 2028.</p>
+    <p>Mitchell, Melanie. <i>Artificial Intelligence: A Guide for Thinking Humans</i>. Picador, 2019.</p>
+    <p>Rennick, Stephanie, and Seán Roberts. “Improving Video Game Conversations with Trope-Informed Design.” <i>Game Studies</i>, vol. 21, no. 3, 2021. <a href="https://gamestudies.org/2103/articles/rennick_roberts" target="_blank">gamestudies.org/2103/articles/rennick_roberts</a>.</p>
+    <p>Underwood, Ted. “A Genealogy of Distant Reading.” <i>DHQ: Digital Humanities Quarterly</i>, vol. 11, no. 2, 2017. <a href="https://www.digitalhumanities.org/dhq/vol/11/2/000317/000317.html" target="_blank">digitalhumanities.org:8081/dhq/vol/11/2/000317/000317.html</a>.</p>
+  </section>
+
+  <footer>
+    <p>&copy; 2024 J. M. L. Whittington. All rights reserved.</p>
+  </footer>
+</body>
+</html>
