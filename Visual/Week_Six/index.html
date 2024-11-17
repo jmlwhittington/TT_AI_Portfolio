@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Genre Analyses of PS2 Video Game Covers</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="https://jmlwhittington.github.io/TT_AI_Portfolio/">Home</a></li>
+		<li><a href="#description">Top</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section id="description">
+    <h1>Genre Analyses of PS2 Video Game Covers</h1>
+    <p>The following is my weekly discussion post.</p>
+  </section>
+  
+  <section id="main">
+    <p>To guide my approach to this week's exercise, I chose PS2 video game covers from some of my favorite titles growing up. There were a total of ten: <i>Shadow of the Colossus</i>, <i>Katamari Damacy</i>, <i>Dark Cloud</i>, <i>Dark Cloud 2</i>, <i>Final Fantasy XII</i> (<i>FFXII</i>), <i>Seek and Destroy</i>, <i>Shin Combat Choro Q</i> (the Japanese release of <i>Seek and Destroy</i>, which I'll explain in a second), <i>Metal Gear Solid 2: Sons of Liberty</i> (<i>MGS2</i>), <i>Star Wars: Battlefront II</i>, and <i>Tribes: Aerial Assault</i>. Game covers spoke to me for this, as it was requested that we select "images [we] find interesting that are related to [our] work in some way . . . [and] assemble these as a collection that speaks to a theme or subject that has significant complexity" (assignment description). I study games, I recently assembled a new set of shelves to store all my retro games on in my living room, and I've been pondering aspects of video game genres for a week or two now. (A project unfortunately likely to die in the heap of others.) So how might covers communicate genre?</p>
+    <p>These game covers were combined in a collage of ten images via Pixlr, a "free online collage maker." The presentation of a single collage was thanks to the wording of "assembl[ing] these as a collection" gving me curiosity into how ChatGPT might separate them. I'd originally chosen ten because that was the limit I discovered was the maximum for a single upload and I didn't want to risk miscommunication. The collage separated the covers with a thin, white border, hoping to give ChatGPT at least some edge. It appears (with some minor cropping of certain titles thanks to Pixlr and the varying resolutions of the source images) as below:</p>
+    <img src="one.png" alt="The first image">
+    <p>I decided the cropping would add a little bit of noise to complicate matters, healthy given the white borders are a slight cheat.</p>
+    <p>Just to get this out of the way: technically speaking, <i>Seek and Destroy</i> and <i>Shin Combat Choro Q</i> are the same game. The covers only differ because the original game was an entry in a series themed around pullback toy cars familiar to a Japanese audience. Other Choro Q games release in other markets include <i>Gadget Racers</i> (<i>Choro Q HG</i>) and <i>Road Trip</i> (<i>Choro Q HG 2</i>). They lost the outward, toy-like Choro Q theming in order to localize them for foreign consumers, despite otherwise featuring the exact same gameplay of having fun with sapient toy cars (or in this case, sapient moddable toy tanks).<sup><a href="#footnote">1</a></sup> Might ChatGPT treat <i>Shin Combat Choro Q</i> as more related to the equally cartoony <i>Katamari Damacy</i>, and <i>Seek and Destroy</i> as similar to <i>MGS2</i>? I intended to see.</p>
+    <p>Enter the prompt. "Can you analyze the images in this collage as separate images, separated by white borders? There should be ten of them." It turns out ChatGPT can't separate the images from a collage, but it can identify them as individual elements. It successfully identified all ten titles with a brief, description of each, down to the Japanese name for <i>Dark Cloud 2</i> randomly. Color me impressed.</p>
+    <p>The next interesting result was with a network graph of how closely the games seem related based off cover analysis alone. I specified cover analysis alone, because I was afraid of the now-identified games just being searched by other means. The result was the following:</p>
+	<p><b>General Grouping:</b></br>
+    <ul>
+	<li><b>Action-Adventure/RPG</b> - These games involve exploration, combat, and narratives. Some involve world-building, and others have tactical depth.</li>
+    <ul>
+		<li><i>Shadow of the Colossus</i> (Action-Adventure, exploration)</li>
+        <li><i>Dark Cloud</i> (RPG with city-building)</li>
+        <li><i>Dark Cloud 2</i> (RPG with city-building)</li>
+        <li><i>Final Fantasy XII</i> (RPG with strategic combat)</li>
+	</ul>
+    <li><b>Stealth/Action</b> - These games focus on stealth or precise combat.</li>
+	<ul>
+        <li><i>Metal Gear Solid 2</i> (Stealth-action, tactical)</li>
+	</ul>
+    <li><b>Vehicular Combat</b> - These focus on vehicle-based battles and may have arcade-like or realistic mechanics.</li>
+	<ul>
+        <li><i>Seek and Destroy</i> (Vehicular combat with tanks)</li>
+        <li><i>Shin Combat Choro Q</i> (Vehicular combat, tanks, more lighthearted)</li>
+	</ul>
+    <li><b><i>Shooter/Multiplayer Battles</b> - These games focus on large-scale multiplayer or single-player combat with a focus on team coordination.</li>
+	<ul>
+        <li><i>Star Wars Battlefront</i> (Team-based multiplayer shooter)</li>
+        <li><i>Tribes: Aerial Assault</i> (Multiplayer with jetpack movement)</li>
+	</ul>
+    <li><b>Quirky/Experimental</b> - These games stand out for their unique gameplay mechanics or quirky visual style.</li>
+	<ul>
+        <li><i>Katamari Damacy</i> (Rolling mechanics, quirky puzzle-action)</li>
+	</ul>
+	</ul>
+    <b>Connection Explanation:</b></br>
+    <ul>
+      <li><i>Dark Cloud 2</i> and <i>Dark Cloud</i> are directly connected as they are from the same series, both RPGs with city-building mechanics.</li>
+      <li><i>Final Fantasy XII</i> shares RPG elements with the <i>Dark Cloud</i> games but is more tactical and combat-heavy, so it's closely linked but slightly apart.</li>
+      <li><i>Metal Gear Solid 2</i> shares strategic gameplay with <i>Final Fantasy XII</i>, though in the stealth-action genre, so there's a small link here for tactical elements.</li>
+      <li><i>Shadow of the Colossus</i> is an action-adventure but is somewhat isolated from the others due to its unique, minimalist design and boss-focused gameplay.</li>
+      <li><i>Seek and Destroy</i> and <i>Shin Combat Choro Q</i> are closely linked as they both involve vehicle-based combat (tanks specifically).</li>
+      <li><i>Star Wars Battlefront</i> and <i>Tribes: Aerial Assault</i> are connected due to their focus on team-based multiplayer shooting.</li>
+      <li><i>Katamari Damacy</i> is in its own quirky space, but its action nature could be distantly linked to the adventure elements of <i>Shadow of the Colossus</i> (both are unique in their gameplay).</li>
+	</ul>
+    </p>
+    <img src="two.png" alt="The second image">
+	<p>I feel like the links between <i>FFXII</i> and <i>MGS2</i>, as well as <i>Katamari Damacy</i> and <i>Shadow of the Colossus</i>, were a bit forced, but it did link <i>Seek and Destroy</i> and <i>Shin Combat Choro Q</i> as sharing gameplay. (Big surprise.) The other connections felt good, although I was surprised <i>Katamari Damacy</i>, <i>Shin Combat Choro Q</i>, or <i>Dark Cloud 2</i> weren't linked by cartoonish imagery. Was ChatGPT picking out elements rather than style? Or did it cheat like I was worried about?</p>
+	<p>I decided to test this out with another graph, this time a bar graph. I asked ChatGPT to now guess the genres of the settings based off the covers alone. I did have to ask it to do a bar graph specifically; it tried with a network graph first. Here's the correct graph:</p>
+    <img src="three.png" alt="The third image">
+	<p>And the source data:</p>
+	<ul>
+	  <li><b>Fantasy:</b></li>
+      <ul>
+        <li><i>Shadow of the Colossus</i></li>
+        <li><i>Dark Cloud</i></li>
+        <li><i>Dark Cloud 2</i></li>
+        <li><i>Final Fantasy XII</i></li>
+      </ul>
+	  <li><b>Science Fiction:</b></li>
+      <ul>
+        <li><i>Star Wars Battlefront</i></li>
+        <li><i>Tribes: Aerial Assault</i></li>
+	  </ul>
+	  <li><b>Military/Realistic:</b></li>
+	  <ul>
+        <li><i>Metal Gear Solid 2</i></li>
+        <li><i>Seek and Destroy</i></li>
+        <li><i>Shin Combat Choro Q</i></li>
+	  </ul>
+	  <li><b>Quirky/Otherworldly:</b></li>
+	  <ul>
+        <li><i>Katamari Damacy</i></li>
+      </ul>
+	</ul>
+    <p>At first, I got excited, because in a longer summary of the assignments before the breakdown, ChatGPT put <i>Shin Combat Choro Q</i> into a "Military/Realistic (cartoony)" bucket. A little contradictory, but it openly identified the style finally. "The tank warfare shown is stylized and playful . . ." In <i>Katamari Damacy</i>'s assignment description, a "strange, colorful style" was also highlighted, and for <i>Dark Cloud 2</i>, "bright colors." But as you can see, it got the assignments otherwise mostly correct. I can't fault it for suggesting <i>Seek and Destroy</i> is "Military/Realistic," given its cover, but I was surprised by <i>Shin Combat Choro Q</i>. Maybe it's still cheating.</p>
+    <p>The last visual of interest from this exercise was in asking ChatGPT to now generate its own collage:</p>
+    <img src="four.png" alt="The fourth image">
+    <p>We see a mutilated PlayStation 2 logo at the top of most covers and some pretty believable entries. A few are reminiscent of games in the collage, and even a few not on it. Except, oh no: obvious <i>Call of Duty</i> covers. Again, riled suspicions. Did tanks and militarism lead to a reliance on something so blatant? Or was there a mixture of actual generation and outside help? I'm going to go with the latter, which leads me into discussing this week's readings.</p>
+    <p>"The real miracle of reading comprehension . . . is in reading between the lines—connecting concepts, reasoning with ideas and understanding implied messages that aren't specifically outlined in the text" (Harwell). As Mitchell exclaims, "I couldn't have said it better" (224). Her suspicion of AI's ability to match human-like levels of comprehension without access to embodied experience is shared by me. Peering back at the above image, notice the following: a logo reminiscent of Microsoft's, a game that looks like a blurred <i>Fallout</i> entry, an <i>Everquest</i>-looking fantasy woman, two mutilated EA Sports logos, and a cover that reminds me too heavily of an ATV game I've since forgotten. These are all believable because they're not genuine new creations. They're not even remixes all the time. In order to create something fresh, ChatGPT would have to understand something about proper game cover design. It might be able to analyze the covers, but it can't do much more. One might recall the "hid[ing] beind a smokescreen of verbal tricks, playfulness, or canned responses" quoted in the final chapter of this week's reading on Mitchell (Levesque et al. 559; Mitchell 227).</p>
+    <p>Similar issues emerge in machine translation, as also pointed out by Mitchell. My background in linguistics was mostly historical in nature, but I also dabbled in computational applications due to the more likely employment opportunities associated with them. I've also volunteered (and I must emphasize, volunteered, not employed or contracted) labor toward translating Wikipedia and Wiktionary entries, two version releases of <i>Minecraft</i>, and Twitter, across five languages. (To be fair, one is fictional—Quenya—and the other is an international auxiliary language—Esperanto. But the other three are real, and two are endangered, hence my volunteering.) Some of these opportunities involved various computer-assisted translation tools, such as translation memory. Translation memory is essentially the recommendation of translations of words, phrases, or entire sentences based off the frequency of past translations made by humans. While it was indeed an impressive aid, this was due to its reliance on human input. It was never acceptable to attempt the same work using Google Translate (GT), especially at the time I was doing this work. Some of this was pre-2016, pre-GT's "neural machine translation" as mentioned by Mitchell (202).</p>
+    <p>Even following this transition, and despite improving every time I revisit it, GT leaves a lot to be desired. Mitchell's friends retranslating the restaurant story back into English from GT's foreign renditions are perfect examples (205-206). GT's mistakes are so effective at obfuscating, it's a viable method of disguising authorship in a practice known as adversarial stylometry. Which brings to note: Mitchell's discussion of adversarial methods in AI thus far have been heavily focused on bad faith usage through the lens of security (228-231). I don't know if she revisits this later in the book, but the concept of adversarial practice attached to AI tools has also spawned an activist culture born in art and privacy. Namely, how to avoid detection by the surveillance apparatus.</p>
+    <p>Without going into great detail as I'm already at a rather long post once again, Zylinska references surveillance and "data capture" as machine photography several times (113). In calling for an "antiracist" "nontrivial perception machine," I wonder how the use of adversarial methods in evading the current iteration of the capitalist apparatus might play into her philosophy (112). How might this also affect her perception machine, if distrust still exists? I must admit, I struggle to speculate on this, as I struggle a little with her writing thus far. This is far from my expertise, although there are tidbits that have been enlightening.</p>
+ </section>
+
+  <section id="footnote">
+    <h1>Notes</h1>
+    <p><a href="#main">1.</a> Indulge me a moment my interest in the intersection of international relations and video games, as I can't not bring this up when I talk about this game. You'll notice an awfully militaristic cover on <i>Seek and Destroy</i>, complete with an American flag; the game came out a year and three months after the September 11 terror attacks. Among mentions of "Allied armor" and an "axis of evil," the rear cover of the game even describes "avoid[ing] megaton Scudds! [<i>sic</i>]," referencing al-Husayn Scud missiles at one time in the possession of Iraq. This was a direct call-out to Americans contemporarily interested in then-novel militaristic video games. The affordance was derived via the immediate context of suspicion surrounding potential (but proven false) Iraqi involvement in the terror attacks and continued media discussion leading up to President Bush's declaration of an "axis of evil" a year after the attacks, and of course the eventual US invasion of the country three months after this game's release.</p>
+    <p>In other words, it was cheap marketing on part of the US version's local publisher, Conspiracy Entertainment. Unsuccessful marketing at that, as the game seems to have been lost to time in the collective memory of most. It's still a fun game with sapient moddable toy tanks. I urge you now to read the game's Wikipedia entry and enjoy how juvenile it is versus the cover.</p>
+  </section>
+
+  <section id="citations">
+    <h1>Works Cited</h1>
+    <p>Harwell, Drew. "AI Models Beat Humans at Reading Comprehension, but They've Still Got aWays to Go." <i>Washington Post</i>, 16 Jan. 2018, www.washingtonpost.com/business/economy/ais-ability-to-read-hailed-as-historical-milestone-but-computers-arent-quite-there/2018/01/16/04638f2e-faf6-11e7-a46b-a3614530bd87_story.html.</p>
+    <p>Levesque, Hector J., Ernest David, and Leora Morgenstern. "The Winograd Schema Challenge." <i>KR'12: Thirteenth International Conference on Principles of Knowledge Representation and Reasoning, Rome, Italy, June 10-14, 2012</i>, edited by Gerhard Brewka, Thomas Eiter, and Sheila A. McIlraith, American Association for Artificial Intelligence, 10 June, 2012. cdn.aaai.org/ocs/4492/4492-21843-1-PB.pdf.</p>
+    <p>Mitchell, Melanie. <i>Artificial Intelligence: A Guide for Thinking Humans</i>. Picador, 2019.</p>
+    <p>Zylinska, Joanna. <i>The Perception Machine: Our Photographic Future between the Eye and AI</i>. MIT Press, 2023.</p>
+  </section>
+
+  <footer>
+    <p>&copy; 2024 J. M. L. Whittington. All rights reserved.</p>
+  </footer>
+</body>
+</html>
