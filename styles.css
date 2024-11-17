@@ -5,17 +5,17 @@ body {
   line-height: 1.6;
   background-color: #f4f4f4;
   color: #333;
-  text-align: center; /* Center all text by default */
+  text-align: center;
 }
 
 header {
   background: #333;
   color: #fff;
   padding: 1em 0;
-  position: fixed; /* Make the navigation bar fixed */
+  position: fixed;
   top: 0;
   width: 100%;
-  z-index: 1000; /* Ensure it stays on top of other elements */
+  z-index: 1000;
 }
 
 nav ul {
@@ -34,13 +34,17 @@ nav ul li a {
 }
 
 section {
-  padding: 4em 2em;
+  padding: 5em 2em 2em;
   margin: 3em auto;
   background: #fff;
   max-width: 800px;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   text-align: center;
+}
+
+section#description {
+  padding-top: 7em;
 }
 
 h1, h2 {
