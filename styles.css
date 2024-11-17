@@ -34,8 +34,8 @@ nav ul li a {
 }
 
 section {
-  padding: 2em;
-  margin: 3em auto; /* Adjust margin to account for the fixed header */
+  padding: 4em 2em;
+  margin: 3em auto;
   background: #fff;
   max-width: 800px;
   border-radius: 5px;
@@ -47,6 +47,27 @@ h1, h2 {
   color: #444;
   text-align: center;
 }
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1em;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 1em;
+  width: 200px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 
 footer {
   text-align: center;
