@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>"Best Games" Recommender</title>
+    <style>
+        /* Base Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1c1b21; /* Dark background */
+            color: #f5f5f5; /* Light text for contrast */
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            color: #ffffff;
+            font-weight: 400;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: 0;
+        }
+
+        /* Container */
+        .container {
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #2a2935; /* Darker section background */
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+        }
+
+        /* Form Labels */
+        label {
+            display: block;
+            margin-top: 20px;
+            color: #d1d1d6;
+            font-size: 16px;
+        }
+
+        /* Input and Select */
+        input[type="number"],
+        select {
+            width: 100%;
+            margin-top: 10px;
+            padding: 12px;
+            border-radius: 5px;
+            border: none;
+            background-color: #3a3947;
+            color: #f5f5f5;
+            font-size: 15px;
+        }
+
+        input[type="number"]::placeholder {
+            color: #bdbdc2; /* Lighter placeholder text */
+        }
+
+        /* Button */
+        button {
+            width: 100%;
+            margin-top: 20px;
+            padding: 12px 20px;
+            background-color: #8f4cd1; /* GOG-inspired purple accent */
+            border: none;
+            border-radius: 5px;
+            color: #ffffff;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #a15ce2; /* Slightly lighter purple on hover */
+        }
+
+        /* Results */
+        h3 {
+            margin-top: 30px;
+            font-weight: 400;
+            font-size: 18px;
+            color: #ffffff;
+            text-align: center;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+            margin-top: 20px;
+        }
+
+        ul li {
+            background-color: #32313f;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            font-size: 15px;
+            color: #f5f5f5;
+        }
+
+        /* Error Message */
+        ul li.error {
+            color: #ff6666; /* Red for error message */
+            background-color: transparent; /* No background on error */
+            font-style: italic;
+            text-align: center;
+        }
+
+        /* Footer Links */
+        .footer-links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+
+        .footer-link-box {
+            background-color: #2a2935;
+            color: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            width: 48%;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .footer-link-box a {
+            color: #8f4cd1;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .footer-link-box a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Please specify your parameters below:</h2>
+    <label>Year Range</label>
+    <input type="number" id="year-start" placeholder="Start Year (min. 1971)" min="1971" max="2022">
+    <input type="number" id="year-end" placeholder="End Year (max. 2022)" min="1971" max="2022">
+
+    <label>Genres</label>
+    <select id="genre-select" multiple>
+        <option>Action</option>
+        <option>Action role-playing</option>
+        <option>Action-adventure</option>
+        <option>Adventure</option>
+        <option>Artillery</option>
+        <option>Beat 'em up</option>
+        <option>Block breaker</option>
+        <option>Business simulation</option>
+        <option>City-building</option>
+        <option>Digital collectible card</option>
+        <option>Farm life simulation</option>
+        <option>Fighting</option>
+        <option>First-person shooter</option>
+        <option>God game</option>
+        <option>Hack and slash</option>
+        <option>Kart racing</option>
+        <option>Life simulation</option>
+        <option>Maze</option>
+        <option>MMORPG</option>
+        <option>MOBA</option>
+        <option>Platform</option>
+        <option>Puzzle</option>
+        <option>Puzzle-platform</option>
+        <option>Racing</option>
+        <option>Rail shooter</option>
+        <option>Real-time strategy</option>
+        <option>Real-time tactics</option>
+        <option>Rhythm</option>
+        <option>Roguelike</option>
+        <option>Role-playing</option>
+        <option>Run and gun</option>
+        <option>Sandbox</option>
+        <option>Shoot 'em up</option>
+        <option>Space flight simulator</option>
+        <option>Sports</option>
+        <option>Stealth</option>
+        <option>Strategy</option>
+        <option>Survival horror</option>
+        <option>Tactical role-playing</option>
+        <option>Third-person shooter</option>
+        <option>Top-down shooter</option>
+        <option>Tower defense</option>
+        <option>Turn-based strategy</option>
+        <option>Vehicle simulation</option>
+    </select>
+
+    <label>Platforms</label>
+    <select id="platform-select" multiple>
+        <option>Amiga</option>
+        <option>Apple II</option>
+        <option>Arcade</option>
+        <option>Atari 2600</option>
+        <option>Atari 8-bit</option>
+        <option>Atari Jaguar</option>
+        <option>Atari ST</option>
+        <option>BBC Micro</option>
+        <option>Commodore 64</option>
+        <option>Dreamcast</option>
+        <option>Electronika 60</option>
+        <option>Game Boy</option>
+        <option>Game Boy Advance</option>
+        <option>Game Boy Color</option>
+        <option>GameCube</option>
+        <option>HP 2100</option>
+        <option>iOS</option>
+        <option>Linux</option>
+        <option>Mac</option>
+        <option>Maemo</option>
+        <option>NES</option>
+        <option>Nintendo 3DS</option>
+        <option>Nintendo 64</option>
+        <option>Nintendo DS</option>
+        <option>Nintendo Switch</option>
+        <option>PC</option>
+        <option>PDP-10</option>
+        <option>PlayStation</option>
+        <option>PS2</option>
+        <option>PS3</option>
+        <option>PS4</option>
+        <option>PS5</option>
+        <option>Saturn</option>
+        <option>Sega Genesis</option>
+        <option>Super NES</option>
+        <option>Wii</option>
+        <option>Wii U</option>
+        <option>Xbox</option>
+        <option>Xbox 360</option>
+        <option>Xbox One</option>
+        <option>Xbox Series X/S</option>
+    </select>
+
+    <button onclick="filterGames()">Recommend Games</button>
+
+    <h3>Results:</h3>
+    <ul id="results"></ul>
+</div>
+
+<!-- Footer Links -->
+<div class="footer-links">
+    <div class="footer-link-box">
+        <a href="https://jmlwhittington.github.io/TT_AI_Portfolio/" target="_blank">Return home</a>
+    </div>
+    <div class="footer-link-box">
+        <a href="https://github.com/jmlwhittington/TT_Game_Recommender" target="_blank">View source repository/a>
+    </div>
+</div>
+
+<script>
+    let gamesData = {};
+
+    // Load JSON data (assumes best_games_list.json is in the same directory)
+    async function loadData() {
+        const response = await fetch('best_games_list.json');
+        gamesData = await response.json();
+    }
+
+    // Filter and display games
+    function filterGames() {
+        const yearStart = parseInt(document.getElementById('year-start').value) || 1971;
+        const yearEnd = parseInt(document.getElementById('year-end').value) || 2022;
+        const selectedGenres = Array.from(document.getElementById('genre-select').selectedOptions).map(option => option.value);
+        const selectedPlatforms = Array.from(document.getElementById('platform-select').selectedOptions).map(option => option.value);
+
+        let filteredGames = gamesData.filter(game => {
+            const matchesYear = game.Year >= yearStart && game.Year <= yearEnd;
+            const matchesGenre = selectedGenres.length === 0 || selectedGenres.includes(game.Genre);
+            const matchesPlatform = selectedPlatforms.length === 0 || selectedPlatforms.includes(game["Original platform(s)"]);
+            return matchesYear && matchesGenre && matchesPlatform;
+        });
+
+        displayGames(shuffleArray(filteredGames).slice(0, 5));
+    }
+
+    // Display up to 5 games or show an error if no games match
+    function displayGames(games) {
+        const results = document.getElementById('results');
+        results.innerHTML = '';
+
+        if (games.length === 0) {
+            const errorMessage = document.createElement('li');
+            errorMessage.textContent = "No games found. Try adjusting your search criteria.";
+            errorMessage.classList.add('error');
+            results.appendChild(errorMessage);
+        } else {
+            games.forEach(game => {
+                const li = document.createElement('li');
+                li.textContent = `${game.Game} (${game.Year}) - ${game.Genre}`;
+                results.appendChild(li);
+            });
+        }
+    }
+
+    // Utility function to shuffle an array
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    // Initialize data
+    loadData();
+</script>
+</body>
+</html>
