@@ -6,6 +6,7 @@ body {
   background-color: #f4f4f4;
   color: #333;
   text-align: center;
+  padding-top: 90px;
 }
 
 header {
@@ -34,17 +35,13 @@ nav ul li a {
 }
 
 section {
-  padding: 5em 2em 2em;
+  padding: 0.15em 2em 2em;
   margin: 3em auto;
   background: #fff;
   max-width: 800px;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   text-align: center;
-}
-
-section#description {
-  padding-top: 7em;
 }
 
 h1, h2 {
@@ -60,6 +57,9 @@ h1, h2 {
 }
 
 .card {
+  display: block; /* Make the entire card clickable */
+  text-decoration: none; /* Remove underline from links */
+  color: inherit; /* Ensure text color stays the same */
   background: #fff;
   border: 1px solid #ddd;
   border-radius: 5px;
@@ -67,11 +67,13 @@ h1, h2 {
   width: 200px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s, box-shadow 0.3s;
+  text-align: center;
 }
 
 .card:hover {
   transform: scale(1.05);
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
 
 footer {
   text-align: center;
