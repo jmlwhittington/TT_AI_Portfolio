@@ -9,6 +9,12 @@ body {
   padding-top: 90px;
 }
 
+.left-align {
+    text-align: left;
+    display: inline-block;
+    margin-left: 0;
+}
+
 header {
   background: #333;
   color: #fff;
