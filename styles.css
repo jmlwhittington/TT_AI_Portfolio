@@ -57,7 +57,10 @@ h1, h2 {
 }
 
 .card {
-  display: block;
+  display: flex; /* Use Flexbox */
+  flex-direction: column; /* Stack the content vertically */
+  justify-content: center; /* Vertically center the content */
+  align-items: center; /* Horizontally center the content */
   text-decoration: none;
   background: #fff;
   border: 1px solid #ddd;
